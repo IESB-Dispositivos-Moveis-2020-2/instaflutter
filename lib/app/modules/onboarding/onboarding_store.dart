@@ -16,4 +16,9 @@ abstract class _OnboardingStoreBase with Store {
     _sharedPreferences.setBool(Constants.SPK_ONBOARDING_DONE, true);
   }
 
+  @action
+  markRegisterDone() {
+    _sharedPreferences.setBool(Constants.SPK_REGISTER_DONE, true);
+  }
+
 }

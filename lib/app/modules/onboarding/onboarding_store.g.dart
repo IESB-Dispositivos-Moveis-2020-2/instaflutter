@@ -24,6 +24,17 @@ mixin _$OnboardingStore on _OnboardingStoreBase, Store {
   }
 
   @override
+  dynamic markRegisterDone() {
+    final _$actionInfo = _$_OnboardingStoreBaseActionController.startAction(
+        name: '_OnboardingStoreBase.markRegisterDone');
+    try {
+      return super.markRegisterDone();
+    } finally {
+      _$_OnboardingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 

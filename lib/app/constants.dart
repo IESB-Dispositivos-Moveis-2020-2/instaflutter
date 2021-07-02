@@ -20,6 +20,7 @@ class _Routes {
   final FEED = '/feed';
   final SEARCH = '/search';
   final PROFILE = '/profile';
+  final EDIT = '/edit';
 
 }
 
