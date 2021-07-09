@@ -47,6 +47,51 @@ mixin _$ProfileStore on _ProfileStoreBase, Store {
     });
   }
 
+  final _$followingAtom = Atom(name: '_ProfileStoreBase.following');
+
+  @override
+  int? get following {
+    _$followingAtom.reportRead();
+    return super.following;
+  }
+
+  @override
+  set following(int? value) {
+    _$followingAtom.reportWrite(value, super.following, () {
+      super.following = value;
+    });
+  }
+
+  final _$followersAtom = Atom(name: '_ProfileStoreBase.followers');
+
+  @override
+  int? get followers {
+    _$followersAtom.reportRead();
+    return super.followers;
+  }
+
+  @override
+  set followers(int? value) {
+    _$followersAtom.reportWrite(value, super.followers, () {
+      super.followers = value;
+    });
+  }
+
+  final _$postsCountAtom = Atom(name: '_ProfileStoreBase.postsCount');
+
+  @override
+  int? get postsCount {
+    _$postsCountAtom.reportRead();
+    return super.postsCount;
+  }
+
+  @override
+  set postsCount(int? value) {
+    _$postsCountAtom.reportWrite(value, super.postsCount, () {
+      super.postsCount = value;
+    });
+  }
+
   final _$loadingAtom = Atom(name: '_ProfileStoreBase.loading');
 
   @override
@@ -129,10 +174,35 @@ mixin _$ProfileStore on _ProfileStoreBase, Store {
   }
 
   @override
+  Future<void> logoff() {
+    final _$actionInfo = _$_ProfileStoreBaseActionController.startAction(
+        name: '_ProfileStoreBase.logoff');
+    try {
+      return super.logoff();
+    } finally {
+      _$_ProfileStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setPostsCount(int count) {
+    final _$actionInfo = _$_ProfileStoreBaseActionController.startAction(
+        name: '_ProfileStoreBase.setPostsCount');
+    try {
+      return super.setPostsCount(count);
+    } finally {
+      _$_ProfileStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 user: ${user},
 bio: ${bio},
+following: ${following},
+followers: ${followers},
+postsCount: ${postsCount},
 loading: ${loading},
 error: ${error},
 posts: ${posts}

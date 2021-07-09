@@ -151,19 +151,19 @@ class _UserHeader extends StatelessWidget {
           ),
           Column(
             children: [
-              Text('100', style: TextStyle(fontWeight: FontWeight.bold)),
-              Text('Publicações')
+              Observer(builder: (_) => Text('${store.postsCount ?? 0}', style: TextStyle(fontWeight: FontWeight.bold))),
+              Text('${(store.postsCount ?? 0) > 1 ? 'Publicações' : 'Publicação'}')
             ],
           ),
           Column(
             children: [
-              Text('200', style: TextStyle(fontWeight: FontWeight.bold)),
-              Text('Seguidores')
+              Observer(builder: (_) => Text('${store.followers ?? 0}', style: TextStyle(fontWeight: FontWeight.bold))),
+              Text('${(store.following ?? 0) > 1 ? 'Seguidores' : 'Seguidor'}')
             ],
           ),
           Column(
             children: [
-              Text('300', style: TextStyle(fontWeight: FontWeight.bold)),
+              Observer(builder: (_) => Text('${store.following ?? 0}', style: TextStyle(fontWeight: FontWeight.bold))),
               Text('Seguindo')
             ],
           )
@@ -194,11 +194,26 @@ class _UserSubhead extends StatelessWidget {
           Observer(builder: (_) {
             return Text(store.bio ?? '');
           }),
-          ElevatedButton(
-            child: Text('Editar perfil'),
-            onPressed: () {
-              Modular.to.pushNamed('.${Constants.Routes.EDIT}');
-            },
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton.icon(
+                icon: Icon(Icons.edit),
+                label: Text('Editar perfil'),
+                onPressed: () {
+                  Modular.to.pushNamed('.${Constants.Routes.EDIT}');
+                },
+              ),
+              ElevatedButton.icon(
+                icon: Icon(Icons.logout),
+                label: Text('Logoff'),
+                onPressed: () {
+                  store.logoff()
+                      .then((_) => Modular.to.popAndPushNamed(Constants.Routes.LOGIN));
+                },
+              )
+            ],
           )
         ],
       ),
@@ -227,6 +242,7 @@ class _UserGallery extends StatelessWidget {
           }
           if (snapshot.hasData && snapshot.data!.docs.length > 0) {
             final posts = snapshot.data!.docs;
+            store.setPostsCount(posts.length);
             // return Wrap(
             //   direction: Axis.horizontal,
             //   spacing: 1,

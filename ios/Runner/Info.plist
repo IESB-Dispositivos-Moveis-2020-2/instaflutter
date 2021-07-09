@@ -41,5 +41,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+	<string>Vamos usar para tirar a foto de perfil e postagens.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Vamos usar para tirar a foto de perfil e postagens.</string>
 </dict>
 </plist>

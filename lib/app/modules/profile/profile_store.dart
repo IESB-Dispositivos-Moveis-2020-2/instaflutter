@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 
 part 'profile_store.g.dart';
@@ -25,10 +24,19 @@ abstract class _ProfileStoreBase with Store {
   }
 
   @observable
-  User? user;
+  late User? user = firebaseAuth.currentUser;
 
   @observable
   String? bio;
+
+  @observable
+  int? following;
+
+  @observable
+  int? followers;
+
+  @observable
+  int? postsCount;
 
   @observable
   bool loading = false;
@@ -56,7 +64,10 @@ abstract class _ProfileStoreBase with Store {
   @action
   void _listenUser(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     if (snapshot.exists) {
-      bio = snapshot.data()?['bio'] as String;
+      final data = snapshot.data() ?? {};
+      bio = data['bio'] as String;
+      following = data.containsKey('following') ? data['following'].length : 0;
+      followers = data.containsKey('followers') ? data['followers'].length : 0;
     }
   }
 
@@ -124,6 +135,16 @@ abstract class _ProfileStoreBase with Store {
     });
 
     loading = false;
+  }
+
+  @action
+  Future<void> logoff() {
+    return firebaseAuth.signOut();
+  }
+
+  @action
+  void setPostsCount(int count) {
+    postsCount = count;
   }
 
 }
